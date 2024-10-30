@@ -18,7 +18,7 @@ const Room = ({user = "Host User"}) => {
   const [msgs, setMsgs] = useState([]);
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000");
+    socket.current = io(process.env.API || "http://localhost:5000");
     socketFunctions.newMessage(socket, setMsgs);
 
     peer.on('open', userId => {
