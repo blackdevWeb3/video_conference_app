@@ -1,0 +1,56 @@
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.home-container button {
+  font-size: 1.4rem;
+  width: 20rem;
+  background-color: #b1b1b1b1;
+}
+.home-container button:hover {
+  background-color: #b1b1b1;
+}
+.home-container input {
+  font-size: 1.2rem;
+  padding: 0.65rem;
+  width: 18.6rem;
+  outline: none;
+  border: 1px solid #b1b1b1;
+  border-radius: 0.4rem;
+}
+.home-container input:focus {
+  border: 0.1rem solid #5c24dd;
+}
+
+*{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.room {
+  width: 96vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.videos {
+  background-color: #e2e2e2;
+  border-radius: 20px;
+  height: 100%;
+  font-size: 0.9rem;
+}
+
+.chat {
+  height: 100%;
+  width: 18rem;
+}
