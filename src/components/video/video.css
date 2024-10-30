@@ -13,6 +13,26 @@
   position: relative;
 }
 
+.empty-avatar {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-avatar p {
+  height: 12rem;
+  width: 12rem;
+  border-radius: 50%;
+  background-color: #b1b1b1;
+  outline: 3px solid #b1b1b1;
+  outline-offset: 3px;
+  font-size: 8rem;
+  margin: auto;
+}
+
 .meet-grid {
   height: 100%;
   width: 20%;

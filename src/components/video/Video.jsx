@@ -7,10 +7,10 @@ import "./video.css";
 import { MdLogout } from "react-icons/md";
 
 
-const Video = ({localVideo, localStream, peers}) => {
+const Video = ({localVideo, localStream, peers, user}) => {
   const navigate = useNavigate();
   const [micOn, setMicOn] = useState(false);
-  const [videoOn, setVideoOn] = useState(!localStream);
+  const [videoOn, setVideoOn] = useState(false);
 
   const toggleMic = () => {
     try {
@@ -47,7 +47,10 @@ const Video = ({localVideo, localStream, peers}) => {
   return (
     <div className="meet">
       <div className="meet-video">
-        <video ref={localVideo} autoPlay></video>
+        <div className="empty-avatar" style={{display: videoOn?"none":"flex"}}>
+          <p>{user ? user.toUpperCase()[0]: "U"}</p>
+        </div>
+        <video ref={localVideo} autoPlay style={{visibility: videoOn?"visible":"hidden"}}></video>
         <div className="meet-options">
           <div className="video-buttons">
             <button onClick={toggleMic} style={micOn?{background: "#e2e2e2"}:null}>{micOn? <AiOutlineAudio/>:<AiOutlineAudioMuted color="white"/>}</button>

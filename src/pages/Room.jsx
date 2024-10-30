@@ -7,7 +7,7 @@ import Chat from "../components/chat/Chat";
 import Peer from "peerjs";
 import "../App.css";
 
-const Room = ({user = "Host User"}) => {
+const Room = () => {
   const { roomId } = useParams();
   const localVideo = useRef();
   const [peers, setPeers] = useState([]);
@@ -16,9 +16,12 @@ const Room = ({user = "Host User"}) => {
   const [localStream, setLocalStream] = useState(null);
   const socket = useRef();
   const [msgs, setMsgs] = useState([]);
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    socket.current = io(process.env.API || "http://localhost:5000");
+    const user = prompt("Enter your name");
+    setUser(user);
+    socket.current = io("http://localhost:5000");
     socketFunctions.newMessage(socket, setMsgs);
 
     peer.on('open', userId => {
@@ -26,7 +29,7 @@ const Room = ({user = "Host User"}) => {
     });
     
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia({ video: true, audio: false })
       .then(stream => {
         setLocalStream(stream);
         localVideo.current.srcObject = stream;
@@ -42,10 +45,15 @@ const Room = ({user = "Host User"}) => {
       .catch(reason => console.log(reason));
   }, []);
 
+  useEffect(() => {
+    console.log("peers", peers);
+  }, [peers])
+
   return (
     <div className="room">
       <div className="videos">
         <Video
+          user={user}
           peers={peers}
           localVideo={localVideo}
           localStream={localStream}
