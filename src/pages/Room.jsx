@@ -7,6 +7,7 @@ import "../App.css";
 import Peer from "peerjs";
 import HoldingCard from "../components/holding/HoldingCard";
 import { getRandomString } from "../utils";
+import { v4 } from "uuid";
 
 const Room = () => {
   const navigate = useNavigate();
@@ -35,21 +36,10 @@ const Room = () => {
   }
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000");
-    if (host) {
-      const peer = new Peer(roomId);
-      setPeer(peer);
-    } else {
-      const peer = new Peer();
-      peer.on('open', id => {
-        setPeer(peer);
-      });
-    }
+    socket.current = io(import.meta.env.VITE_SOCKETIO_SERVER || "https://socket-io-server-sigma.vercel.app");
+    const peer = new Peer(host?roomId:v4(), {host:import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com"});
+    setPeer(peer);
   }, []);
-
-  useEffect(() => {
-    console.log("holding users", holdingUsers);
-  },[holdingUsers])
 
   useEffect(() => {
     if (peer) {
@@ -96,7 +86,6 @@ const Room = () => {
               user={user}
               peer={peer}
               members={members}
-              setMembers={setMembers}
               showChat={showChat}
             />
           </div>
