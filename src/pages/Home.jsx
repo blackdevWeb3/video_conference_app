@@ -1,9 +1,10 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuid } from "uuid";
+import { v4 } from "uuid";
+import { getRandomString } from "../utils";
 
-const roomId = uuid();
+const uuid = v4();
 
 const Home = () => {
   const [id, setId] = useState("");
@@ -13,13 +14,13 @@ const Home = () => {
     <div className="home-container">
       <button
         onClick={() => {
-          navigate(`/conference/${roomId}`);
+          navigate(`/conference/${uuid}`, {state:{host:true, name:"Host"}});
         }}
       >Create conference</button>
       <input type="text" placeholder="Enter conference ID" onChange={(e) => setId(e.target.value)} value={id} />
       <button
         onClick={() => {
-          navigate(`/conference/${id}`);
+          navigate(`/conference/${id}`, {state:{host:false, name: getRandomString()}});
         }}
       >Join conference</button>
     </div>

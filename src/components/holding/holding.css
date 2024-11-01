@@ -1,0 +1,60 @@
+.holding-card {
+  position: fixed;
+  border: 1px solid #b1b1b1;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #b1b1b1;
+  padding: 4px 8px;
+  top: 1rem;
+  margin: auto;
+  display: flex;
+  background-color: #f6f9fd;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s ease-out;
+  color: #333c;
+  z-index: 100;
+}
+
+.holding-card p {
+  width: 100%;
+  text-align: left;
+  padding-bottom: 4px;
+  margin-block: 4px;
+  border-bottom: 1px solid #b1b1b1;
+}
+
+.holding-card > hr {
+  border: none;
+  border-bottom: 1px solid #b1b1b1;
+  width: 100%;
+  margin-block: 4px;
+}
+
+.holding-card > button {
+  padding: 6px 8px 4px;
+  color: #f6f9fd;
+  background-color: rgb(255, 71, 46);
+  box-shadow: 3px 3px 5px #b1b1b1;
+  margin-block: 4px;
+}
+
+.holding-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.item-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.item-button button {
+  border: 1px solid #b1b1b1;
+  border-radius: 50%;
+  box-shadow: 1px 1px 4px #b1b1b1;
+  padding: 3px 2px 0 2px;
+}

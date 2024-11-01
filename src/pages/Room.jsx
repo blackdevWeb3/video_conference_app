@@ -1,67 +1,112 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
-import socketFunctions from "../utils";
 import Video from "../components/video/Video";
 import Chat from "../components/chat/Chat";
-import Peer from "peerjs";
 import "../App.css";
+import Peer from "peerjs";
+import HoldingCard from "../components/holding/HoldingCard";
+import { getRandomString } from "../utils";
 
 const Room = () => {
+  const navigate = useNavigate();
   const { roomId } = useParams();
-  const localVideo = useRef();
-  const [peers, setPeers] = useState([]);
-  const peer = new Peer();
-  const addedPeers = useRef([]);
-  const [localStream, setLocalStream] = useState(null);
+  const { state } = useLocation();
+  const { host, name } = state || {};
+  const [peer, setPeer] = useState();
   const socket = useRef();
-  const [msgs, setMsgs] = useState([]);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({host, name: name || getRandomString()});
+  const [holdingUsers, setHoldingUsers] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [joint, setJoint] = useState(false);
+  const [chat, showChat] = useState(false);
+
+  const allowToJoin = (holder) => {
+    socket.current.emit('allow-join', holder);
+    setHoldingUsers(holdingUsers.filter(h => h.socketId !== holder.socketId))
+  }
+  const rejectToJoin = (holder) => {
+    socket.current.emit('reject-join', holder);
+    setHoldingUsers(holdingUsers.filter(h => h.socketId !== holder.socketId))
+  }
+  const allowAll = () => {
+    socket.current.emit('allow-all', {roomId, socketIdList: holdingUsers.map(h => h.socketId)});
+    setHoldingUsers([]);
+  }
 
   useEffect(() => {
-    const user = prompt("Enter your name");
-    setUser(user);
     socket.current = io("http://localhost:5000");
-    socketFunctions.newMessage(socket, setMsgs);
-
-    peer.on('open', userId => {
-      socket.current.emit('join-room', { roomID: roomId, userID: userId, user });
-    });
-    
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: false })
-      .then(stream => {
-        setLocalStream(stream);
-        localVideo.current.srcObject = stream;
-        peer.on('call', call => {
-          const peerId = call.peer;
-          socket.current.emit('find-user', { roomID: roomId, peerID: peerId });
-          call.answer(stream);
-          socketFunctions.connectToNewUser(socket, peerId, addedPeers, call, setPeers);
-        });
-        socketFunctions.getAllUsers(socket, addedPeers, stream, peer, setPeers);
-        socketFunctions.disconnectUser(socket, setPeers);
-      })
-      .catch(reason => console.log(reason));
+    if (host) {
+      const peer = new Peer(roomId);
+      setPeer(peer);
+    } else {
+      const peer = new Peer();
+      peer.on('open', id => {
+        setPeer(peer);
+      });
+    }
   }, []);
 
   useEffect(() => {
-    console.log("peers", peers);
-  }, [peers])
+    console.log("holding users", holdingUsers);
+  },[holdingUsers])
+
+  useEffect(() => {
+    if (peer) {
+      socket.current.on("all-users", (users) => {
+        setJoint(true);
+        setMembers(users);
+      })
+      if (host) {
+        socket.current.on('user-request-join', ({roomId, socketId, user}) => {
+          setHoldingUsers(prev => [...prev, {roomId, socketId, user}]);
+        })
+        socket.current.emit('join-room', {
+          roomId,
+          peerId: peer.id,
+          user
+        })
+      } else {
+        socket.current.on('user-allow-join', ({roomId, token}) => {
+          socket.current.emit('join-room', {roomId, peerId: peer.id, user, token})
+        });
+        socket.current.on('user-reject-join', (roomId) => {
+          navigate('/');
+          window.location.reload();
+        })
+        socket.current.on('host-not-found', (roomId) => {
+          navigate('/');
+          window.location.reload();
+        });
+
+        socket.current.emit('request-join', {roomId, user});
+      }
+    }
+  }, [peer])
 
   return (
     <div className="room">
-      <div className="videos">
-        <Video
-          user={user}
-          peers={peers}
-          localVideo={localVideo}
-          localStream={localStream}
-        />
-      </div>
-      <div className="chat">
-        <Chat user={user} roomId={roomId} socket={socket} msgs={msgs} />
-      </div>
+      <HoldingCard holdingUsers={holdingUsers} allow={allowToJoin} reject={rejectToJoin} allowAll={allowAll}/>
+      {host || joint ? (
+        <>
+          <div className="videos">
+            <Video
+              roomId={roomId}
+              socket={socket}
+              user={user}
+              peer={peer}
+              members={members}
+              setMembers={setMembers}
+              showChat={showChat}
+            />
+          </div>
+          <div className="chat" style={{display: chat?"flex":"none"}}>
+            <Chat user={user} roomId={roomId} peerId={peer?.id} socket={socket} />
+          </div>
+        </>
+      ) : (
+        <h2>Waiting to allow you to join the room...</h2>
+      )}
     </div>
   )
 }

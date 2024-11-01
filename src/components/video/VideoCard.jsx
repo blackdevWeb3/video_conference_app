@@ -1,16 +1,20 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import './video.css';
 
-const VideoCard = ({peer}) => {
+const VideoCard = ({peerId, call, stream, name, state}) => {
   const videoRef = useRef();
 
-  peer.on('stream', (stream) => {
+  useEffect(() => {
     videoRef.current.srcObject = stream;
-  })
+  }, [stream])
 
   return (
     <div className="video-card">
-      <video ref={videoRef} autoPlay></video>
+      <div className="empty-avatar" style={{display: stream?"none":"flex"}}>
+        <p>{name ? name.toUpperCase()[0]: "U"}</p>
+      </div>
+      <video ref={videoRef} autoPlay style={{visibility: stream?"visible":"hidden"}}></video>
+      <span className="user-name">{name}</span>
     </div>
   )
 }

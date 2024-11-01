@@ -1,5 +1,6 @@
 .chat-box {
   height: calc(100% - 20px);
+  width: 100%;
   border: 1px solid #ccc;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -10,7 +11,7 @@
   gap: 10px;
 }
 
-.chat-messages{
+.chat-messages {
   overflow: auto;
 }
 
@@ -36,11 +37,17 @@
 
 .chat-message p {
   margin-block: 4px;
+  border-bottom-left-radius: 0;
 }
 
 .user-message {
   width: fit-content;
   margin-left: auto;
+}
+
+.user-message p {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 0;
 }
 
 .chat-user {
