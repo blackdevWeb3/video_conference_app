@@ -31,13 +31,20 @@ const Room = () => {
     setHoldingUsers(holdingUsers.filter(h => h.socketId !== holder.socketId))
   }
   const allowAll = () => {
-    socket.current.emit('allow-all', {roomId, socketIdList: holdingUsers.map(h => h.socketId)});
+    socket.current.emit('allow-all', {roomId, newUsers: holdingUsers.map(h => ({
+      socketId: h.socketId,
+      peerId: h.peerId,
+      name: h.user.name
+    }))});
     setHoldingUsers([]);
   }
 
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_SOCKETIO_SERVER || "https://socket-io-server-sigma.vercel.app");
-    const peer = new Peer(host?roomId:v4(), {host:import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com"});
+    const socket_server = import.meta.env.VITE_SOCKETIO_SERVER || "https://socket-io-server-sigma.vercel.app";
+    const peerjs_server = import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com";
+    socket.current = io(socket_server);
+    const peer = new Peer(host?roomId:v4(), {host:peerjs_server});
+    console.log("servers", socket_server, peerjs_server);
     setPeer(peer);
   }, []);
 
@@ -48,8 +55,8 @@ const Room = () => {
         setMembers(users);
       })
       if (host) {
-        socket.current.on('user-request-join', ({roomId, socketId, user}) => {
-          setHoldingUsers(prev => [...prev, {roomId, socketId, user}]);
+        socket.current.on('user-request-join', ({roomId, socketId, peerId, user}) => {
+          setHoldingUsers(prev => [...prev, {roomId, socketId, peerId, user}]);
         })
         socket.current.emit('join-room', {
           roomId,
@@ -69,7 +76,7 @@ const Room = () => {
           window.location.reload();
         });
 
-        socket.current.emit('request-join', {roomId, user});
+        socket.current.emit('request-join', {roomId, peerId: peer.id, user});
       }
     }
   }, [peer])
@@ -86,6 +93,7 @@ const Room = () => {
               user={user}
               peer={peer}
               members={members}
+              setMembers={setMembers}
               showChat={showChat}
             />
           </div>

@@ -72,6 +72,11 @@ video {
   object-fit: cover;
 }
 
+.meet-video > video {
+  border: 3px solid #00adfd;
+  border-radius: 20px;
+}
+
 .meet-options {
   position: absolute;
   display: flex;
@@ -120,6 +125,7 @@ button:hover {
   /* border: 1px solid #b1b1b1; */
   background-color: #e2e2e2;
   min-height: 10rem;
+  cursor: pointer;
 }
 .video-card video {
   width: 100%;
@@ -137,4 +143,12 @@ button:hover {
   left: 12px;
   /* color: white; */
   bottom: 6px;
+}
+
+.meet-video > .user-name {
+  position: absolute;
+  left: 16px;
+  font-size: 24px;
+  /* color: white; */
+  top: 12px;
 }

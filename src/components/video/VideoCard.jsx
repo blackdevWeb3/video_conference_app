@@ -1,19 +1,19 @@
 import { useEffect, useRef } from "react";
 import './video.css';
 
-const VideoCard = ({peerId, call, stream, name, state}) => {
-  const videoRef = useRef();
+const VideoCard = ({name, state, videoRef, onClickCard}) => {
+  const ref = useRef();
 
   useEffect(() => {
-    videoRef.current.srcObject = stream;
-  }, [stream])
+    videoRef.ref = ref;
+  }, [])
 
   return (
-    <div className="video-card">
-      <div className="empty-avatar" style={{display: stream?"none":"flex"}}>
+    <div className="video-card" onClick={onClickCard}>
+      <div className="empty-avatar" style={{display: state > 2?"none":"flex"}}>
         <p>{name ? name.toUpperCase()[0]: "U"}</p>
       </div>
-      <video ref={videoRef} autoPlay style={{visibility: stream?"visible":"hidden"}}></video>
+      <video ref={ref} autoPlay style={{visibility: state > 2?"visible":"hidden"}}></video>
       <span className="user-name">{name}</span>
     </div>
   )

@@ -4,6 +4,5 @@ export const getRandomString = () => {
   for (let i = 0; i < 6; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-  console.log("random string", result);
   return result;
 };
