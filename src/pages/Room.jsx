@@ -42,7 +42,9 @@ const Room = () => {
   useEffect(() => {
     const socket_server = import.meta.env.VITE_SOCKETIO_SERVER || "https://socket-io-server-sigma.vercel.app";
     const peerjs_server = import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com";
-    socket.current = io(socket_server);
+    socket.current = io(socket_server, {
+      transports: ['websocket']
+    });
     const peer = new Peer(host?roomId:v4(), {host:peerjs_server});
     console.log("servers", socket_server, peerjs_server);
     setPeer(peer);
