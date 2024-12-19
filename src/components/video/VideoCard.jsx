@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import './video.css';
+import { AiOutlineAudioMuted } from "react-icons/ai";
 
-const VideoCard = ({name, state, videoRef, onClickCard}) => {
+const VideoCard = ({name, avatar, state, videoRef, muted, onClickCard}) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -10,11 +11,12 @@ const VideoCard = ({name, state, videoRef, onClickCard}) => {
 
   return (
     <div className="video-card" onClick={onClickCard}>
-      <div className="empty-avatar" style={{display: state > 2?"none":"flex"}}>
-        <p>{name ? name.toUpperCase()[0]: "U"}</p>
+      <div className="empty-avatar" style={{display: state && state.video ?"none":"flex"}}>
+        {avatar ? <img src={avatar} alt={avatar}/> : <p>{name.toUpperCase()[0]}</p>}
       </div>
-      <video ref={ref} autoPlay style={{visibility: state > 2?"visible":"hidden"}}></video>
+      <video ref={ref} autoPlay muted={muted} style={{visibility: state && state.video ?"visible":"hidden"}}></video>
       <span className="user-name">{name}</span>
+      {(!state || !state.audio) && <div className="muted"><AiOutlineAudioMuted color="rgb(234, 67, 53)" /></div>}
     </div>
   )
 }

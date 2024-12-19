@@ -6,75 +6,28 @@
 }
 
 .meet-video {
-  width: 80%;
-  height: 100%;
+  height: 80vh;
+  max-width: 140vh;
+  min-width: calc(100% - 322px);
   border-radius: 10px;
-  object-fit: cover;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.empty-avatar {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.empty-avatar p {
-  height: 12rem;
-  width: 12rem;
-  border-radius: 50%;
-  background-color: #b1b1b1;
-  outline: 3px solid #b1b1b1;
-  outline-offset: 3px;
-  font-size: 8rem;
-  margin: auto;
-}
-
-.meet-grid {
-  height: calc(100% - 16px);
-  width: 20%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 20px;
-  border: 1px solid #e2e2e2;
-  background-color: #f9f9f9;
-  scrollbar-width: thin;
-  scrollbar-color: #e2e2e2 transparent;
-}
-.meet-grid::-webkit-scrollbar {
-  width: 4px !important;
-}
-.meet-grid::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 2px;
-}
-.meet-grid::-webkit-scrollbar-thumb {
-  background: #e2e2e2 !important; 
-  border-radius: 2px;
-}
-.meet-grid::-webkit-scrollbar-thumb:hover {
-  background: #b1b1b1; 
-}
-
-video {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
 .meet-video > video {
-  border: 3px solid #00adfd;
   border-radius: 20px;
+  height: 100%;
+  width: 100%;
+}
+
+.meet-video > .user-name {
+  position: absolute;
+  left: 16px;
+  font-size: 24px;
+  color: white;
+  top: 12px;
 }
 
 .meet-options {
@@ -93,62 +46,154 @@ video {
   gap: 1rem;
 }
 
-.video-buttons button,
-.end-button button {
+.video-buttons .voice-detector-container {
+  display: none;
+}
+
+button {
   border-radius: 50%;
-  background-color: rgb(255, 71, 46);
+  background-color: rgb(234, 67, 53);
   width: 3rem;
   height: 3rem;
   padding: 0;
-  border: none;
+  border: 1px solid rgb(234, 67, 53);
   outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 3px 12px #4448;
+  cursor: pointer;
+}
+
+button.on {
+  background-color: transparent;
+  border-color: white;
+}
+button.on:hover {
+  background-color: #fff5;
 }
 
 button:hover {
-  box-shadow: 2px 3px 18px #444d;
+  background-color: rgba(234, 67, 53, 0.85);
 }
 
-.video-buttons svg,
-.end-button svg {
+button svg {
   width: 1.6rem;
   height: 1.6rem;
 }
 
+button i {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #FA7B17;
+  color: white;
+  top: -0.1rem;
+  left: 2rem;
+  font-style: normal;
+}
+
+.meet-video > .muted,
+.meet-video > .voice-detector-container {
+  right: 16px;
+  top: 12px;
+  width: 1.6rem;
+  height: 1.6rem;
+  position: absolute;
+}
+
+.meet-grid {
+  height: 100%;
+  min-width: 322px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 20px;
+  border: 1px solid #e2e2e2;
+  background-color: #f9f9f9;
+}
+
+.meet-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.muted {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  width: 22.4px;
+  height: 22.4px;
+  padding: 2px;
+  border-radius: 50%;
+  background-color: #fff5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.empty-avatar {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-avatar p,
+.empty-avatar img {
+  height: 192px;
+  width: 192px;
+  border-radius: 50%;
+  color: white;
+  background-color: #b1b1b1;
+  outline: 3px solid #b1b1b1;
+  outline-offset: 3px;
+  font-size: 160px;
+  margin: auto;
+  vertical-align: middle;
+  text-align: center;
+}
+
 .video-card {
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
-  /* border: 1px solid #b1b1b1; */
-  background-color: #e2e2e2;
-  min-height: 10rem;
+  background-color: rgb(54, 54, 54);
+  width: 304px;
+  height: 171px;
+  min-height: 171px;
   cursor: pointer;
 }
+
 .video-card video {
-  width: 100%;
+  width: 304px;
+  height: 171px;
+  border-radius: 0;
 }
-.video-card .empty-avatar p {
-  font-size: 2.8rem;
-  height: 4rem;
-  width: 4rem;
+
+.video-card .empty-avatar p,
+.video-card .empty-avatar img {
+  font-size: 54px;
+  height: 64px;
+  width: 64px;
   outline-offset: 2px;
   outline-width: 1px;
+  color: white;
 }
 
 .video-card .user-name {
   position: absolute;
   left: 12px;
-  /* color: white; */
+  color: white;
   bottom: 6px;
-}
-
-.meet-video > .user-name {
-  position: absolute;
-  left: 16px;
-  font-size: 24px;
-  /* color: white; */
-  top: 12px;
 }

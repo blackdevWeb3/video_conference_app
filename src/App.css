@@ -4,53 +4,200 @@
 }
 .home-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-}
-.home-container button {
-  font-size: 1.4rem;
-  width: 20rem;
-  background-color: #b1b1b1b1;
-}
-.home-container button:hover {
-  background-color: #b1b1b1;
-}
-.home-container input {
-  font-size: 1.2rem;
-  padding: 0.65rem;
-  width: 18.6rem;
-  outline: none;
-  border: 1px solid #b1b1b1;
-  border-radius: 0.4rem;
-}
-.home-container input:focus {
-  border: 0.1rem solid #5c24dd;
+  height: 100%;
+  gap: 6vw;
 }
 
-*{
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
+.home-container .video-container {
+  position: relative;
+  border-radius: 12px;
+  background-color: rgb(54, 54, 54);
+  width: 640px;
+  height: 360px;
+}
+
+.home-container .video-container video {
+  width: 640px;
+  height: 360px;
+}
+
+.home-container .video-container .voice-detector {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+}
+
+.home-container .video-container .button-group {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.home-container .video-container .button-group button {
+  position: relative;
+  border-radius: 50%;
+  background-color: rgb(234, 67, 53);
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 1px solid rgb(234, 67, 53);
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.home-container .video-container .button-group button.on {
+  background-color: transparent;
+  border-color: white;
+}
+.home-container .video-container .button-group button.on:hover {
+  background-color: #fff5;
+}
+
+.home-container .video-container .button-group button:hover {
+  background-color: rgba(234, 67, 53, 0.85);
+}
+
+.home-container .video-container .button-group button svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.home-container .video-container .button-group button i {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #FA7B17;
+  color: white;
+  top: -0.1rem;
+  left: 2rem;
+  font-style: normal;
+}
+
+.home-container .action-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  padding: 4rem;
+}
+
+.action-group h3 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: -1rem;
+}
+
+.action-group p,
+.action-group input {
+  border: 1px solid #00adfd;
+  outline: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  width: 20rem;
+  font-size: 1.2rem;
+}
+
+.action-group input::placeholder {
+  font-size: 1rem;
+}
+.action-group input:focus {
+  border-color: #0083ff;
+}
+
+.action-group button {
+  font-size: 1rem;
+  border: none;
+  border-radius: 2rem;
+  padding: 1rem;
+  cursor: pointer;
+  width: 16rem;
+  background-color: #b1b1b1b1;
+  transition: 0.25s;
+}
+
+.action-group button:hover {
+  background-color: #b1b1b1;
+}
+
+.action-group .spinner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  margin: -4rem;
+}
+
+.voice-detector-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 4px;
+  gap: 2px;
+  background-color: #00adfd;
+  border-radius: 50%;
+  box-shadow: 1px 2px 4px #4448;
+}
+
+@keyframes scaleAnimation {
+  0% {
+    height: 4px;
+  }
+  50% {
+    height: 12px;
+  }
+  100% {
+    height: 4px;
+  }
+}
+
+.voice-detector-container.loading i {
+  animation: scaleAnimation 0.4s infinite;
+}
+
+.voice-detector-container i {
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: white;
 }
 
 .room {
-  width: 96vw;
-  height: 80vh;
+  width: 100%;
+  height: 100%;
+  padding: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
 }
 
-.videos {
-  background-color: #e2e2e2;
+.room .videos {
+  background-color: rgb(54, 54, 54);
   border-radius: 20px;
-  height: 100%;
+  height: 80vh;
+  width: 100%;
   font-size: 0.9rem;
 }
 
-.chat {
-  height: 100%;
+.room .chat {
+  height: 80vh;
   width: 20rem;
+  min-width: 18rem;
 }
