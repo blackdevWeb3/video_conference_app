@@ -3,12 +3,13 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  justify-content: space-between;
 }
 
 .meet-video {
   height: 80vh;
-  max-width: 140vh;
-  min-width: calc(100% - 322px);
+  /* max-width: 140vh; */
+  width: calc(100% - 322px);
   border-radius: 10px;
   position: relative;
   display: flex;
@@ -90,6 +91,7 @@ button i {
   color: white;
   top: -0.1rem;
   left: 2rem;
+  font-size: 0.7rem;
   font-style: normal;
 }
 
@@ -97,14 +99,14 @@ button i {
 .meet-video > .voice-detector-container {
   right: 16px;
   top: 12px;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
   position: absolute;
 }
 
 .meet-grid {
-  height: 100%;
-  min-width: 322px;
+  height: calc(100% - 16px);
+  min-width: 304px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -158,7 +160,7 @@ video {
   background-color: #b1b1b1;
   outline: 3px solid #b1b1b1;
   outline-offset: 3px;
-  font-size: 160px;
+  font-size: 7.5rem;
   margin: auto;
   vertical-align: middle;
   text-align: center;
@@ -172,6 +174,7 @@ video {
   width: 304px;
   height: 171px;
   min-height: 171px;
+  min-width: 304px;
   cursor: pointer;
 }
 
@@ -183,7 +186,7 @@ video {
 
 .video-card .empty-avatar p,
 .video-card .empty-avatar img {
-  font-size: 54px;
+  font-size: 2.5rem;
   height: 64px;
   width: 64px;
   outline-offset: 2px;
@@ -196,4 +199,19 @@ video {
   left: 12px;
   color: white;
   bottom: 6px;
+}
+
+@media screen and (max-width: 942px) {
+  .meet {
+    flex-direction: column-reverse;
+  }
+  .meet-video {
+    height: calc(100vh - 13rem);
+    width: calc(100%);
+  }
+  .meet-grid {
+    flex-direction: row-reverse;
+    height: 170px;
+    width: calc(100vw - 3.2rem);
+  }
 }

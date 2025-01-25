@@ -10,7 +10,7 @@ const uuid = v4();
 
 const Home = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({host: true, name:""});
+  const [user, setUser] = useState({host: true, name: localStorage.getItem("name")});
   const [micOn, setMicOn] = useState();
   const [videoOn, setVideoOn] = useState();
 
@@ -36,7 +36,7 @@ const Home = () => {
             host: true
           }
         });
-      }} 
+      }}
       actionText={"Create conference"}
     />
   )
@@ -54,7 +54,10 @@ export const PrepareMeeting = ({user, setUser, onAction, actionText, micOn, setM
       setMicOn(false);
     } else {
       navigator.mediaDevices
-      .getUserMedia({video: false, audio:true})
+      .getUserMedia({video: false, audio:{
+        echoCancellation: false,
+        noiseSuppression: false,
+      }})
       .then(device => {
         addStream(ref, device, "audio")
         setMicOn(true);
@@ -79,7 +82,10 @@ export const PrepareMeeting = ({user, setUser, onAction, actionText, micOn, setM
     if (micOn !== undefined || videoOn !== undefined) {
       if (!init) {
         navigator.mediaDevices
-        .getUserMedia({video: videoOn !== undefined, audio: micOn !== undefined})
+        .getUserMedia({video: videoOn !== undefined, audio: micOn !== undefined ? {
+          echoCancellation: false,
+          noiseSuppression: false,
+        } : false})
         .then(device => {
           addStream(ref, device)
           setVideoOn(videoOn !== undefined ? true : undefined);
@@ -115,6 +121,7 @@ export const PrepareMeeting = ({user, setUser, onAction, actionText, micOn, setM
         <input placeholder="Your name" value={user.name} onChange={e => setUser({...user, name: e.target.value})} />
         <button disabled={!user.name || spinner} onClick={() => {
           setSpinner(true);
+          localStorage.setItem("name", user.name)
           onAction();
           removeStream(ref);
           // setTimeout(() => setSpinner(false), 120000)

@@ -384,7 +384,7 @@ const Video = ({roomId, user, peer, socket, members, setMembers, showChat, newMs
               }
             </button>
             <button onClick={() => {
-              navigator.clipboard.writeText(window.location.origin + "/conference/" + roomId);
+              navigator.clipboard.writeText(window.location.origin + "/" + roomId);
               setCopied(true);
               setTimeout(() => {
                 setCopied(false);
