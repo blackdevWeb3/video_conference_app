@@ -34,7 +34,7 @@ const Room = () => {
     socket.current = io(import.meta.env.VITE_SOCKETIO_SERVER, {
       transports: ['websocket']
     });
-    peer.current = new Peer(host ? roomId : v4(), { host: import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com" });
+    peer.current = new Peer(host ? roomId : v4(), { host: import.meta.env.VITE_PEERJS_SERVER, secure: true });
     socket.current.on("all-users", (users) => {
       setMembers(users);
       setJoint(true);

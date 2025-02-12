@@ -185,7 +185,7 @@ const Video = ({roomId, user, peer, socket, members, setMembers, showChat, newMs
 
   useEffect(() => {
     if (peer.current) {
-      screenPeer.current = new Peer(peer.current.id + "_screen", { host: import.meta.env.VITE_PEERJS_SERVER || "0.peerjs.com" });
+      screenPeer.current = new Peer(peer.current.id + "_screen", { host: import.meta.env.VITE_PEERJS_SERVER, secure: true });
 
       socket.current.on("user-joined", (user) => {
         setMembers(prev => [...prev, user]);
