@@ -1,8 +1,47 @@
-# React + Vite
+# Simple meeting application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Users can create a video meeting and can access to the meeting room with a link. There is no authentication. Replicated Google Meet as much as possible.
 
-Currently, two official plugins are available:
+## Functionality
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* Video/Voice call
+* Text messaging
+
+## How to run this project?
+
+First, install node modules:
+
+```
+npm install
+```
+
+Second, run the development server.
+
+```
+npm run dev
+```
+
+You can see the following screens:
+
+![welcome](public/welcome.png)
+
+![room](public/room.png)
+
+This project is paired with [this repo](https://github.com/phantom-98/socket.io-server) and requires `.env` file which has two env variables:
+```
+VITE_SOCKETIO_SERVER=       // your socket io server url
+VITE_PEERJS_SERVER=         // your peerjs server. it can be "0.peerjs.com"
+```
+
+## Tech stack
+
+* React + Vite
+* Socket.io
+* PeerJS
+* Voice Activity Detection
+
+## Deployment on Vercel
+
+This project is live on [https://simple-meet.vercel.app](https://simple-meet.vercel.app)
+
+Since it is impossible to deploy socket.io server with free service, I used a live socket.io server from one of my past project.
