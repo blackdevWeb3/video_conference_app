@@ -27,7 +27,7 @@ You can see the following screens:
 
 ![room](public/room.png)
 
-This project is paired with [this repo](https://github.com/phantom-98/socket.io-server) and requires `.env` file which has two env variables:
+This project is paired with [this repo](https://github.com/blackdevWeb3/websocket_server.git) and requires `.env` file which has two env variables:
 ```
 VITE_SOCKETIO_SERVER=       // your socket io server url
 VITE_PEERJS_SERVER=         // your peerjs server. it can be "0.peerjs.com"
